@@ -25,6 +25,9 @@ namespace WpfApp3
         TextBlock Message = new TextBlock();
         public MainWindow()
         {
+            ImageBrush b3 = new ImageBrush();
+            b3.ImageSource = new BitmapImage(new Uri("C:/Users/周志航/Pictures/qipan.jpg", UriKind.Relative));
+            this.Background = b3;
             InitializeComponent();
             createGridWithBoard();
             RedrawGrid();
@@ -76,14 +79,6 @@ namespace WpfApp3
 
         public void createGridWithBoard()
         {
-            grid.RowDefinitions.Add(new RowDefinition());
-            Message.Text = "Start";
-            Message.FontSize = 30;
-            Message.TextAlignment = TextAlignment.Center;
-            Grid.SetColumnSpan(Message, 9);
-            Grid.SetRow(Message, 10);
-            grid.Children.Add(Message);
-            this.Content = grid;
             game.Board.InitializeBorad();
             for (int i = 0; i <= 8; i++)
             {
@@ -130,7 +125,7 @@ namespace WpfApp3
 
         public void RedrawGrid()
         {
-            int z = 1;
+            int z = 0;
             foreach(chess i in game.Board.Chess)
             {
                     Button btnSelected = (Button)grid.Children[z];
@@ -156,7 +151,7 @@ namespace WpfApp3
                 }
                 else
                 {
-                    btnSelected.SetValue(BackgroundProperty, Brushes.Gray);
+                    btnSelected.SetValue(BackgroundProperty, Brushes.Transparent);
                 }
                 z++;
             }
@@ -177,15 +172,17 @@ namespace WpfApp3
 
                     case false:
                         game.Movechess(row, col);
+                        game.RefreshCanGo(row, col);
                         ChangeState();
                         break;
 
                 }
             }
-            catch (Exception ex)
+            catch (MyException ex)
             {
                 MessageBox.Show(ex.Message);
-                ChangeState();
+                changeState();
+                game.RefreshCanGo(row, col);
             }
             RedrawGrid();
         }
@@ -195,14 +192,25 @@ namespace WpfApp3
             switch (game.state)
             {
                 case false:
-                    Message.Text = "Select Move";
+                    Message.Text = "Select Piece";
+                    game.state = true;
                     break;
 
                 case true:
-                    Message.Text = "select Piece";
+                    Message.Text = "Select Move";
+                    game.state = false;
                     break;
             }
+
+
         }
+
+        public void changeState()
+        {
+            game.state = true;
+            Message.Text = "Select Piece";
+        }
+
         /** private void Button_Click(object sender, RoutedEventArgs e)
          {
              MessageBox.Show(((Button)sender).GetValue());

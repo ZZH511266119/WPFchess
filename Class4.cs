@@ -257,10 +257,11 @@ namespace ConsoleXiangqi
             **/
          public void Playchoose(int beginrow, int begincol)//选择棋子
          {
-            this.begincol = begincol;
-            this.beginrow = beginrow;
-            this.state = false;
-         }
+ 
+                this.begincol = begincol;
+                this.beginrow = beginrow;
+            
+        }
 
         public void Movechess(int endrow, int endcol)
         {
@@ -268,8 +269,12 @@ namespace ConsoleXiangqi
              {
                  Board.Chess[endrow, endcol].alive = false;
              }**/
-            Board.MoveChess(begincol, beginrow, endcol, endrow);
-            this.state = true;
+
+            if(this.beginrow == endrow && this.begincol == endcol)
+            {
+                 MyException ex = new MyException();
+                 throw new MyException("you choose the start point", ex);
+            }
         }
         /** public void DisplayChoose(int colum, int row)//可能后期用于提供可走路线的展示
          {
@@ -574,6 +579,18 @@ namespace ConsoleXiangqi
 
          }**/
 
+
+        public void RefreshCanGo(int endrow, int endcol)
+        {
+            for (int i = 0; i <= 9; i++)
+            {
+                for (int j = 0; j <= 8; j++)
+                {
+                    Board.Chess[i, j].Cango = false;
+                }
+
+            }
+        }
         public void SwitchPlayer()
         {
             switch (color)
