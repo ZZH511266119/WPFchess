@@ -6,18 +6,22 @@ using System.Text;
 
 namespace ConsoleXiangqi
 {
+
     public abstract class chess
     {
         string name;//名字，颜色，行，列，这是我暂时想到有用的属性
         public string color;
-
+        public int row;
+        public int column;
         public bool Cango = false;
         public bool alive = true;
 
-        public chess(string color, string name)//构造函数
+        public chess(string color, string name,int column, int row)//构造函数
         {
             this.color = color;
             this.name = name;
+            this.column = column;
+            this.row = row;
         }
 
         public string Getname()//获取名字
@@ -48,57 +52,57 @@ namespace ConsoleXiangqi
     //以下就算是各个棋子的类，也就是“棋子”的子类，除了将我添加了一个"生死"属性，其它一样
         public class horse : chess
         {
-            public horse(string color)
-            : base(color, "马")
+            public horse(string color,int column, int row)
+            : base(color, "马",column,row)
             {
         }
         }
 
          public class cannon : chess
         {
-            public cannon(string color)
-            : base(color, "炮")
+            public cannon(string color, int column, int row)
+            : base(color, "炮", column, row)
             { }
         }
         public class rood : chess
         {
-            public rood(string color)
-            : base(color, "车")
+            public rood(string color, int column, int row)
+            : base(color, "车", column, row)
             { }
         }
 
         public class soldier : chess
         {
-            public soldier(string color)
-            : base(color, "兵")
+            public soldier(string color, int column, int row)
+            : base(color, "兵", column, row)
             { }
     }
 
         public class elephant : chess
         {
-            public elephant(string color)
-            : base(color, "象")
+            public elephant(string color, int column, int row)
+            : base(color, "象", column, row)
             { }
     }
 
         public class guard : chess
         {
-            public guard(string color)
-            : base(color, "士")
+            public guard(string color, int column, int row)
+            : base(color, "士", column, row)
             { }
         }
 
         public class general : chess
         {
-        public general(string color)
-            : base(color, "将")
+        public general(string color, int column, int row)
+            : base(color, "将", column, row)
         { }
         }
 
     public class nochess : chess
     {
-        public nochess()
-            : base("nochess", "nochess")
+        public nochess(int column, int row)
+            : base("nochess", "nochess", column, row)
         { }
     }
 

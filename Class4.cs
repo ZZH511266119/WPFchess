@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ConsoleXiangqi
 {
+
     public  class control//这个类的作用我觉得是能把main类变得很简洁
     {
         public board Board = new board();
@@ -269,7 +270,7 @@ namespace ConsoleXiangqi
              {
                  Board.Chess[endrow, endcol].alive = false;
              }**/
-
+            Board.MoveChess(this.begincol, this.beginrow, endcol, endrow);
             if(this.beginrow == endrow && this.begincol == endcol)
             {
                  MyException ex = new MyException();
